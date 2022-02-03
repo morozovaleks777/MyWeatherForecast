@@ -9,15 +9,15 @@ import com.example.myweatherforecast.screens.WeatherSplashScreen
 
 
 @Composable
-fun WeatherNavigation (){
-    val navController= rememberNavController( )
+fun WeatherNavigation() {
+    val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = WeatherScreens.SplashScreen.name ){
-composable(WeatherScreens.SplashScreen.name){
-    WeatherSplashScreen(navController=navController)
-}
-        composable(WeatherScreens.MainScreen.name){
-           MainScreen(navController = navController)
+    NavHost(navController = navController, startDestination = WeatherScreens.SplashScreen.name) {
+        composable(WeatherScreens.SplashScreen.name) {
+            WeatherSplashScreen(navController = navController)
+        }
+        composable(WeatherScreens.MainScreen.name) {
+            MainScreen(navController = navController)
         }
     }
 }
