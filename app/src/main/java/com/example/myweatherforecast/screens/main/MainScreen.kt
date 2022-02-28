@@ -1,6 +1,5 @@
-package com.example.myweatherforecast.screens
+package com.example.myweatherforecast.screens.main
 
-import android.content.ClipData
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
@@ -23,7 +22,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.myweatherforecast.R
@@ -31,7 +29,6 @@ import com.example.myweatherforecast.data.DataOrException
 import com.example.myweatherforecast.model.Weather
 import com.example.myweatherforecast.model.WeatherItem
 import com.example.myweatherforecast.navigation.WeatherScreens
-import com.example.myweatherforecast.screens.main.MainViewModel
 import com.example.myweatherforecast.utils.formatDate
 import com.example.myweatherforecast.utils.formatDateTime
 import com.example.myweatherforecast.utils.formatDecimals
@@ -39,10 +36,10 @@ import com.example.myweatherforecast.widgets.WeatherAppBar
 import com.example.myweatherforecast.widgets.WeatherStateImage
 
 @Composable
-fun MainScreen(navController: NavController, mainViewModel: MainViewModel= hiltViewModel()){
+fun MainScreen(city: String?,navController: NavController, mainViewModel: MainViewModel= hiltViewModel()){
 
     val weatherData= produceState<DataOrException<Weather,Boolean,Exception>>(initialValue =DataOrException(loading = true)){
-        value=mainViewModel.getWeatherData("Lvov")
+        value=mainViewModel.getWeatherData(city=city.toString())
     }.value
     if(weatherData.loading==true){
         CircularProgressIndicator()
