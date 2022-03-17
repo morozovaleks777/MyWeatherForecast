@@ -1,18 +1,18 @@
 package com.example.myweatherforecast.widgets
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -21,8 +21,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.myweatherforecast.model.Favorite
 import com.example.myweatherforecast.navigation.WeatherScreens
+import com.example.myweatherforecast.screens.favorite.FavoriteViewModel
+import kotlinx.coroutines.flow.collect
 
 @Composable
 fun WeatherAppBar(
@@ -31,6 +35,7 @@ fun WeatherAppBar(
     isMainScreen:Boolean=true,
     elevation: Dp =0.dp,
     navController: NavController,
+    favoriteViewModel: FavoriteViewModel= hiltViewModel(),
     onAddActionClicked: () -> Unit = {},
     onButtonClicked: ()->Unit={}
 ){
@@ -80,10 +85,57 @@ fun WeatherAppBar(
                              onButtonClicked.invoke()
                          })
                      }
+        if(isMainScreen){
+
+            val isAlreadyFavList=favoriteViewModel.favList.collectAsState().value.filter {
+                item -> item.city==title.split(",")[0]
+            }
+
+         if(isAlreadyFavList.isNullOrEmpty()){
+             Icon(imageVector = Icons.Default.FavoriteBorder,
+                 contentDescription ="favorite icon",
+                 modifier = Modifier
+                     .scale(0.9f)
+                     .clickable {
+                         favoriteViewModel.insertFavorite(
+                             Favorite(
+                                 city = title.split(",")[0],
+                                 country = title.split(",")[1]
+                             )
+                         ).run { showIt.value=true }
+
+                     })
+         }else{
+             Icon(imageVector = Icons.Default.FavoriteBorder,
+                 contentDescription ="favorite icon",
+                 modifier = Modifier
+                     .scale(0.9f)
+                     .clickable {
+//                         favoriteViewModel.insertFavorite(
+//                             Favorite(
+//                                 city = title.split(",")[0],
+//                                 country = title.split(",")[1]
+//                             )
+//                         )
+
+                     },
+                 tint = Color.Red)
+             showIt.value=false
+
+         }
+            ShowToast(context = context, showIt = showIt)
+        }
     },
     backgroundColor = Color.Transparent,
     elevation = elevation
 )
+}
+
+@Composable
+fun ShowToast(context:Context, showIt: MutableState<Boolean>) {
+    if(showIt.value){
+    Toast.makeText(context,"already is done",Toast.LENGTH_SHORT).show()}
+showIt.value=false
 }
 
 @Composable

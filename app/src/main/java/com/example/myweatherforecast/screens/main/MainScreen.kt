@@ -61,10 +61,13 @@ Scaffold(topBar = {
                            navController.navigate(WeatherScreens.SearchScreen.name)
         },
 
-       icon = Icons.Default.ArrowBack ,elevation = 5.dp){
-        Log.d("Test", "MainScaffold: onClicked arrow ")
-    }
-}) {
+   //    icon = Icons.Default.ArrowBack ,elevation = 5.dp
+    )
+//    {
+//        Log.d("Test", "MainScaffold: onClicked arrow ")
+//    }
+ }
+) {
     MainContent(weather)
     
 }
