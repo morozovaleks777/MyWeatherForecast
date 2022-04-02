@@ -1,9 +1,8 @@
 package com.example.myweatherforecast.model
 
 import androidx.annotation.NonNull
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
+
 
 @Entity(tableName = "fav_tbl")
 data class Favorite(

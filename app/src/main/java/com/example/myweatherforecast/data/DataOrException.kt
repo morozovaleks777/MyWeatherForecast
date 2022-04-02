@@ -2,6 +2,6 @@ package com.example.myweatherforecast.data
 
 class DataOrException<T,Boolean,E:Exception> (
     var data:T?=null,
-    var loading:Boolean?=null,
+    var loading:kotlin.Boolean?=null,
     var e:E?=null
 )

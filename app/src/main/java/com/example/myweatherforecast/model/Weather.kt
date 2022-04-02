@@ -1,5 +1,7 @@
 package com.example.myweatherforecast.model
 
+
+
 data class Weather(
     val city: City,
     val cnt: Int,

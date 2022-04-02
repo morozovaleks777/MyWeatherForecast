@@ -40,9 +40,11 @@ class MainViewModel @Inject constructor(
 //    Log.d("Test", "getWeather: ${data.value.data.toString()}")
 //
 //  }
-  suspend fun getWeatherData(city:String):DataOrException<Weather,Boolean,Exception>{
-return repository.getWeather(cityQuery = city)
+suspend fun getWeatherData(city: String, units: String)
+        : DataOrException<Weather, Boolean, Exception> {
+  return repository.getWeather(cityQuery = city, units = units)
+
+}
   }
 
 
-}

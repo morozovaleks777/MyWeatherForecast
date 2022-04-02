@@ -1,5 +1,7 @@
 package com.example.myweatherforecast.model
 
+
+
 data class WeatherItem(
     val clouds: Int,
     val deg: Int,
